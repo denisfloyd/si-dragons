@@ -1,15 +1,19 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 
 import Input from "@/components/elements/Input";
 
+import { AuthContext } from "@/contexts/AuthContext";
+
 import { Container, Content, Banner, Button } from "./styles";
 
 const Home: NextPage = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
+  const { signIn } = useContext(AuthContext);
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -19,7 +23,7 @@ const Home: NextPage = () => {
       password,
     };
 
-    // await signIn(data);
+    await signIn(data);
   }
 
   return (
