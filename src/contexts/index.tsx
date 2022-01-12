@@ -3,9 +3,9 @@ import { AuthProvider } from "./AuthContext";
 import { ToastProvider } from "./ToastContext";
 
 const AppProvider: React.FC = ({ children }) => (
-  <AuthProvider>
-    <ToastProvider>{children}</ToastProvider>
-  </AuthProvider>
+  <ToastProvider>
+    <AuthProvider>{children}</AuthProvider>
+  </ToastProvider>
 );
 
 export default AppProvider;

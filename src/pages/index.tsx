@@ -8,6 +8,7 @@ import Input from "@/components/elements/Input";
 import { AuthContext } from "@/contexts/AuthContext";
 
 import { Container, Content, Banner, Button } from "./styles";
+import { withSSRGuest } from "@/utils/withSSRGuest";
 
 const Home: NextPage = () => {
   const [email, setEmail] = useState<string>("");
@@ -61,5 +62,11 @@ const Home: NextPage = () => {
     </>
   );
 };
+
+export const getServerSideProps = withSSRGuest(async (ctx) => {
+  return {
+    props: {},
+  };
+});
 
 export default Home;

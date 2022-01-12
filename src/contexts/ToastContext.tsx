@@ -20,7 +20,9 @@ type ToastProviderProps = {
   children: ReactNode;
 };
 
-const ToastContext = createContext<ToastContextData>({} as ToastContextData);
+export const ToastContext = createContext<ToastContextData>(
+  {} as ToastContextData
+);
 
 export function ToastProvider({ children }: ToastProviderProps) {
   const [messages, setMessages] = useState<ToastMessage[]>([]);

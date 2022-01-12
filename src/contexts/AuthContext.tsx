@@ -1,13 +1,17 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
-import { setCookie, parseCookies, destroyCookie } from "nookies";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import Router from "next/router";
+import { setCookie, parseCookies, destroyCookie } from "nookies";
+import decode from "jwt-decode";
 
 import { api } from "../services/apiClient";
 import axios from "axios";
-
-type User = {
-  email: string;
-};
+import { ToastContext } from "./ToastContext";
 
 type SignInCredentials = {
   email: string;
@@ -17,7 +21,7 @@ type SignInCredentials = {
 type AuthContextData = {
   signIn: (credentials: SignInCredentials) => Promise<void>;
   signOut: () => void;
-  token: string;
+  user: string;
   isAuthenticated: boolean;
 };
 
@@ -38,8 +42,10 @@ export function signOut() {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [token, setToken] = useState<string>("");
-  const isAuthenticated = !!token;
+  const [user, setUser] = useState<string>("");
+  const isAuthenticated = !!user;
+
+  const { addToast } = useContext(ToastContext);
 
   useEffect(() => {
     authChannel = new BroadcastChannel("auth");
@@ -56,10 +62,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, []);
 
   useEffect(() => {
-    const { "@sidragons/token": token } = parseCookies();
+    const { "@sidragons.token": token } = parseCookies();
 
     if (token) {
-      setToken(token);
+      const user = decode<{ email: string }>(token);
+
+      setUser(user.email);
     } else {
       signOut();
     }
@@ -71,30 +79,38 @@ export function AuthProvider({ children }: AuthProviderProps) {
         baseURL: "http://localhost:3000/api",
       });
 
-      const response = await api.post("sessions", {
+      const response = await apiFromApiRoutes.post("users/sessions", {
         email,
         password,
       });
 
       const { token } = response.data;
 
-      setCookie(undefined, "@sidragons/token", token, {
+      const user = decode<{ email: string }>(token);
+
+      setCookie(undefined, "@sidragons.token", token, {
         maxAge: 60 * 60 * 24 * 30, // 30 days
         path: "/",
       });
 
-      setToken(token);
+      console.log(user);
+      setUser(user.email);
 
       api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
       Router.push("/dashboard");
     } catch (err) {
-      console.log(err);
+      addToast({
+        type: "error",
+        title: "Erro na autenticação",
+        description:
+          "Ocorreu um erro ao tentar realizar a autenticação. Verifique o usuário e/ou senha!",
+      });
     }
   }
 
   return (
-    <AuthContext.Provider value={{ signIn, signOut, isAuthenticated, token }}>
+    <AuthContext.Provider value={{ signIn, signOut, isAuthenticated, user }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,61 +1,58 @@
-import { clearToastMessage } from '@/store/modules/messages/actions'
-import { IToastMessage } from '@/store/modules/messages/types'
-import React, { useEffect } from 'react'
-import { FiAlertCircle, FiCheckCircle, FiInfo, FiXCircle } from 'react-icons/fi'
-import { useDispatch } from 'react-redux'
+import React, { useContext, useEffect } from "react";
+import {
+  FiAlertCircle,
+  FiCheckCircle,
+  FiInfo,
+  FiXCircle,
+} from "react-icons/fi";
 
-import { Container } from './styles'
+import { ToastMessage, ToastContext } from "@/contexts/ToastContext";
+
+import { Container } from "./styles";
+import { AuthContext } from "@/contexts/AuthContext";
 
 interface ToastProps {
-  message: IToastMessage
-  style: object
+  message: ToastMessage;
+  style: object;
 }
 
 const icons = {
   info: <FiInfo size={24} />,
   error: <FiAlertCircle size={24} />,
   success: <FiCheckCircle size={24} />,
-}
+};
 
 const Toast: React.FC<ToastProps> = ({ message, style }) => {
-  const dispatch = useDispatch();
+  const { removeToast } = useContext(ToastContext);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      dispatch(clearToastMessage({
-        id: message.id
-      }))
-    }, 3000)
+      removeToast(message.id);
+    }, 3000);
 
     return () => {
-      clearTimeout(timer)
-    }
-  }, [message.id])
-
-  const handleRemoveToastContainter = (toastId: string) => {
-    dispatch(clearToastMessage({
-      id: toastId
-    }))
-  }
+      clearTimeout(timer);
+    };
+  }, [removeToast, message.id]);
 
   return (
     <Container
       type={message.type}
-      $hasDescription={Number(!!message.description)}
+      hasDescription={Number(!!message.description)}
       style={style}
     >
-      {icons[message.type || 'info']}
+      {icons[message.type || "info"]}
 
       <div>
         <strong>{message.title}</strong>
         {message.description && <p>{message.description}</p>}
       </div>
 
-      <button onClick={() => handleRemoveToastContainter(message.id)} type="button">
+      <button onClick={() => removeToast(message.id)} type="button">
         <FiXCircle size={18} />
       </button>
     </Container>
-  )
-}
+  );
+};
 
-export default Toast
+export default Toast;

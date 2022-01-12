@@ -4,8 +4,8 @@ import { convertPixelToREM } from '@/styles/abstracts/_functions';
 import { SIZE } from '@/styles/abstracts/_variables';
 
 interface ContainerProps {
-  type?: 'success' | 'error' | 'info';
-  $hasDescription: number;
+  type?: "success" | "error" | "info";
+  hasDescription: number;
 }
 
 const toastTypeVariation = {
@@ -38,7 +38,7 @@ export const Container = styled(animated.div)<ContainerProps>`
     margin-top: ${SIZE._8};
   }
 
-  ${props => toastTypeVariation[props.type || 'info']};
+  ${(props) => toastTypeVariation[props.type || "info"]};
 
   svg {
     margin: ${SIZE._4} ${SIZE._12} 0 0;
@@ -65,8 +65,8 @@ export const Container = styled(animated.div)<ContainerProps>`
     color: inherit;
   }
 
-  ${props =>
-    !props.$hasDescription &&
+  ${(props) =>
+    !props.hasDescription &&
     css`
       align-items: center;
 

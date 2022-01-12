@@ -3,14 +3,9 @@ import { useTransition } from "react-spring";
 
 import Toast from "@/components/elements/Toast";
 
-import { Container } from "./styles";
+import { ToastMessage } from "@/contexts/ToastContext";
 
-export interface ToastMessage {
-  id: string;
-  type?: "success" | "error" | "info";
-  title: string;
-  description?: string;
-}
+import { Container } from "./styles";
 
 interface ToastContainerProps {
   messages: ToastMessage[];
