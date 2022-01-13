@@ -42,6 +42,7 @@ export function ToastProvider({ children }: ToastProviderProps) {
     },
     []
   );
+
   const removeToast = useCallback((id: string) => {
     setMessages((state) => state.filter((message) => message.id !== id));
   }, []);

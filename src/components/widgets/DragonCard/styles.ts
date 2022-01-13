@@ -1,13 +1,16 @@
+import styled from "styled-components";
+
 import { flexbox } from "@/styles/abstracts/_mixins";
 import { SIZE } from "@/styles/abstracts/_variables";
-import styled, { css } from "styled-components";
 
 export const Container = styled.li`
+  ${flexbox("column", "stretch")};
   background: var(--gray-100);
   border-radius: 8px;
 
   section.body {
     padding: ${SIZE._24};
+    flex: 1;
 
     h2 {
       color: var(--gray-600);
