@@ -2,7 +2,17 @@ import styled from "styled-components";
 import { SIZE } from "@/styles/abstracts/_variables";
 
 export const Container = styled.main`
-  padding: ${SIZE._32} ${SIZE._32} 0;
+  padding: ${SIZE._32};
+  height: 100vh;
+  position: relative;
+  overflow: overlay;
+
+  & > button {
+    position: absolute;
+    top: 20px;
+    width: auto;
+    right: 2rem;
+  }
 `;
 
 export const DragonList = styled.ul`

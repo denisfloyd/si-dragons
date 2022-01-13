@@ -12,7 +12,7 @@ import { withSSRGuest } from "@/utils/withSSRGuest";
 import { Input } from "@/components/elements/Input";
 import getValidationsErrors from "@/utils/getValidationErrors";
 
-import { Container, Content, Banner, Button } from "./styles";
+import { Container, Content, Banner, ButtonLogin } from "./styles";
 
 interface LoginFormData {
   username: string;
@@ -27,7 +27,6 @@ const Home: NextPage = () => {
   const handleSubmit = useCallback(
     async (data: LoginFormData) => {
       try {
-        console.log(data);
         formRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
@@ -76,7 +75,7 @@ const Home: NextPage = () => {
               label="Senha:"
             />
 
-            <Button type="submit">Acessar</Button>
+            <ButtonLogin type="submit">Acessar</ButtonLogin>
           </Form>
         </Content>
       </Container>

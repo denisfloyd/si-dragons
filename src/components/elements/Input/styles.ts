@@ -63,5 +63,5 @@ export const Label = styled.label`
 `;
 
 export const Error = styled.span`
-  color: var(--red-400);
+  color: var(--white);
 `;

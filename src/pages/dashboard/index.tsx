@@ -10,10 +10,13 @@ import { api } from "@/services/apiClient";
 import { useMutation } from "react-query";
 import { queryClient } from "@/services/queryClient";
 import ModalEditDragon from "@/components/widgets/ModalEditDragon";
+import ModalAddDragon from "@/components/widgets/ModalAddDragon";
+import Button from "@/components/elements/Button";
 
 export default function Dashboard() {
   const [editingDragon, setEditingDragon] = useState<Dragon>({} as Dragon);
 
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [editModalOpen, setEditModalOpen] = useState<boolean>(false);
 
   const { data, isLoading, isFetching, error } = useDragons();
@@ -43,6 +46,51 @@ export default function Dashboard() {
     }
   );
 
+  const handleAddDragon = async (dragon: Dragon) => {
+    const newDragon = {
+      ...editingDragon,
+      ...dragon,
+    };
+
+    await createDragon.mutateAsync(newDragon);
+  };
+
+  const createDragon = useMutation(
+    async (dragon: Dragon) => {
+      const response = await api.post(`/`, {
+        ...dragon,
+      });
+
+      return response.data;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("dragons");
+      },
+    }
+  );
+
+  const handleDeleteDragon = async (id: string) => {
+    await deleteDragon.mutateAsync(id);
+  };
+
+  const deleteDragon = useMutation(
+    async (id: string) => {
+      const response = await api.delete(`/${id}`);
+
+      return response.data;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("dragons");
+      },
+    }
+  );
+
+  const toggleModal = () => {
+    setModalOpen(!modalOpen);
+  };
+
   const toggleEditModal = () => {
     setEditModalOpen(!editModalOpen);
   };
@@ -61,12 +109,18 @@ export default function Dashboard() {
             <DragonCard
               key={dragon.id}
               dragon={dragon}
-              // handleDelete={() => {}),
+              handleDelete={handleDeleteDragon}
               handleEditDragon={handleEditDragon}
             />
           ))}
         </DragonList>
       )}
+
+      <ModalAddDragon
+        isOpen={modalOpen}
+        setIsOpen={toggleModal}
+        handleAddDragon={handleAddDragon}
+      />
 
       <ModalEditDragon
         isOpen={editModalOpen}
@@ -74,6 +128,8 @@ export default function Dashboard() {
         editingDragon={editingDragon}
         handleUpdateDragon={handleUpdateDragon}
       />
+
+      <Button onClick={toggleModal}>Adicionar Drãgão</Button>
     </Container>
   );
 }

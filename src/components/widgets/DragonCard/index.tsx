@@ -5,14 +5,14 @@ import { Dragon } from "@/services/hooks/useDragons";
 interface DragonCardProps {
   dragon: Dragon;
   handleEditDragon: (dragon: Dragon) => void;
-  handleDelete?: (id: number) => void;
+  handleDelete: (id: string) => void;
 }
 
 import { Container } from "./styles";
 
 export const DragonCard: React.FC<DragonCardProps> = ({
   dragon,
-  handleDelete,
+  handleDelete: handleDeleteProps,
   handleEditDragon,
 }) => {
   const setEditingDragon = () => {
@@ -37,7 +37,7 @@ export const DragonCard: React.FC<DragonCardProps> = ({
 
           <button
             type="button"
-            // onClick={() => handleDeleteProps(dragon.id)}
+            onClick={() => handleDeleteProps(dragon.id)}
             data-testid={`remove-dragon-${dragon.id}`}
           >
             <FiTrash size={20} />

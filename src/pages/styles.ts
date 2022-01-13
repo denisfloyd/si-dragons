@@ -59,7 +59,7 @@ export const InputContainer = styled.div`
   }
 `;
 
-export const Button = styled(ButtonComponent)`
+export const ButtonLogin = styled(ButtonComponent)`
   display: block;
   margin: ${SIZE._32} auto;
 `;
