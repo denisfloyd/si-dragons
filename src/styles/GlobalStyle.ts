@@ -68,7 +68,6 @@ export const GlobalStyle = createGlobalStyle`
   body, input, textarea, select, button {
     font: 400 ${COMMON.FONT_SIZE_BASE} "Roboto", sans-serif;
     color: var(--white);
-    line-height: 16px;
   }
 
 

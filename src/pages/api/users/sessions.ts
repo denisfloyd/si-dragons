@@ -3,17 +3,17 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import jwt from "jsonwebtoken";
 
 interface User {
-  email: string;
+  username: string;
   password: string;
 }
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const user = req.body as User;
 
-  if (user.email === "admin" && user.password === "admin") {
+  if (user.username === "admin" && user.password === "admin") {
     res.status(200).json({
       token: jwt.sign(user, "super-secret", {
-        subject: user.email,
+        subject: user.username,
         expiresIn: "24h",
       }),
     });

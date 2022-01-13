@@ -1,20 +1,22 @@
 import { FiEdit3, FiTrash } from "react-icons/fi";
 
-type Dragon = {
-  id: string;
-  name: string;
-  type: string;
-};
+import { Dragon } from "@/services/hooks/useDragons";
 
 interface DragonCardProps {
   dragon: Dragon;
+  handleEditDragon: (dragon: Dragon) => void;
+  handleDelete?: (id: number) => void;
 }
 
 import { Container } from "./styles";
 
-export const DragonCard: React.FC<DragonCardProps> = ({ dragon }) => {
+export const DragonCard: React.FC<DragonCardProps> = ({
+  dragon,
+  handleDelete,
+  handleEditDragon,
+}) => {
   const setEditingDragon = () => {
-    // handleEditDragon(dragon);
+    handleEditDragon(dragon);
   };
 
   return (
@@ -27,8 +29,7 @@ export const DragonCard: React.FC<DragonCardProps> = ({ dragon }) => {
         <div className="icon-container">
           <button
             type="button"
-            className="icon"
-            // onClick={setEditingFood}
+            onClick={setEditingDragon}
             data-testid={`edit-dragon-${dragon.id}`}
           >
             <FiEdit3 size={20} />
@@ -36,7 +37,6 @@ export const DragonCard: React.FC<DragonCardProps> = ({ dragon }) => {
 
           <button
             type="button"
-            className="icon"
             // onClick={() => handleDeleteProps(dragon.id)}
             data-testid={`remove-dragon-${dragon.id}`}
           >

@@ -4,6 +4,7 @@ import { convertPixelToREM } from "@/styles/abstracts/_functions";
 
 interface ContainerProps {
   isFocused: boolean;
+  isFilled: boolean;
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -26,7 +27,13 @@ export const Container = styled.div<ContainerProps>`
   ${(props) =>
     props.isFocused &&
     css`
-      border: 2px solid #ff9000;
+      border: 2px solid var(--blue-300);
+    `}
+
+  ${(props) =>
+    props.isFilled &&
+    css`
+      color: var(--blue-300);
     `}
 
   input {
@@ -53,4 +60,8 @@ export const Label = styled.label`
   font-weight: ${FONT_WEIGHT.BOLD};
   margin: ${SIZE._8} 0;
   color: var(--white);
+`;
+
+export const Error = styled.span`
+  color: var(--red-400);
 `;

@@ -11,7 +11,7 @@ export const Container = styled.main`
   height: 100vh;
 `;
 
-export const Banner = styled.div`
+export const Banner = styled.section`
   background-image: url("./banner.png");
 
   background-size: cover;
@@ -24,7 +24,7 @@ export const Banner = styled.div`
   `}
 `;
 
-export const Content = styled.div`
+export const Content = styled.section`
   ${flexbox("column")};
   ${setDimensions("50%", "auto")};
   background-color: var(--gray-600);

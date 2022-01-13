@@ -1,31 +1,60 @@
-import { FormEvent, useContext, useState } from "react";
+import { FormEvent, useContext, useRef, useCallback } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
-
-import Input from "@/components/elements/Input";
+import * as Yup from "yup";
+import { FormHandles } from "@unform/core";
+import { Form } from "@unform/web";
 
 import { AuthContext } from "@/contexts/AuthContext";
 
-import { Container, Content, Banner, Button } from "./styles";
 import { withSSRGuest } from "@/utils/withSSRGuest";
 
+import { Input } from "@/components/elements/Input";
+import getValidationsErrors from "@/utils/getValidationErrors";
+
+import { Container, Content, Banner, Button } from "./styles";
+
+interface LoginFormData {
+  username: string;
+  password: string;
+}
+
 const Home: NextPage = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const formRef = useRef<FormHandles>(null);
 
   const { signIn } = useContext(AuthContext);
 
-  async function handleSubmit(event: FormEvent) {
-    event.preventDefault();
+  const handleSubmit = useCallback(
+    async (data: LoginFormData) => {
+      try {
+        console.log(data);
+        formRef.current?.setErrors({});
 
-    const data = {
-      email,
-      password,
-    };
+        const schema = Yup.object().shape({
+          username: Yup.string().required("Usuário obrigatório"),
+          password: Yup.string().required("Senha obrigatória"),
+        });
 
-    await signIn(data);
-  }
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+
+        await signIn({
+          username: data.username,
+          password: data.password,
+        });
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationsErrors(err);
+
+          formRef.current?.setErrors(errors);
+
+          return;
+        }
+      }
+    },
+    [signIn]
+  );
 
   return (
     <>
@@ -38,25 +67,17 @@ const Home: NextPage = () => {
       <Container>
         <Banner />
         <Content>
-          <form onSubmit={handleSubmit}>
-            <Input
-              name="username"
-              placeholder="Seu usuário"
-              label="Usuário:"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+          <Form ref={formRef} onSubmit={handleSubmit}>
+            <Input name="username" placeholder="Seu usuário" label="Usuário:" />
             <Input
               name="password"
               type="password"
               placeholder="Sua senha"
               label="Senha:"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
             />
 
             <Button type="submit">Acessar</Button>
-          </form>
+          </Form>
         </Content>
       </Container>
     </>

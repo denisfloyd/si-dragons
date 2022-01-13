@@ -38,6 +38,10 @@ export const Container = styled.li`
         border: none;
         transition: 0.1s;
 
+        &:hover {
+          background: var(--gray-100);
+        }
+
         svg {
           color: var(--gray-600);
         }

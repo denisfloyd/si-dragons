@@ -3,7 +3,7 @@ import { shade } from "polished";
 import { FONT_WEIGHT, SIZE } from "@/styles/abstracts/_variables";
 
 export const Container = styled.button`
-  background: var(--orange-100);
+  background: var(--blue-300);
   height: 3rem;
   border-radius: 5px;
   border: 0;
@@ -14,6 +14,6 @@ export const Container = styled.button`
   margin-top: ${SIZE._16};
   transition: background-color 0.2s;
   &:hover {
-    background: ${shade(0.2, "#FF9000")};
+    background: ${shade(0.2, "#4286d4")};
   }
 `;
