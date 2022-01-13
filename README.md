@@ -1,34 +1,145 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<p align="center">
+   <img src="./.github/logo.png" alt="SI_DRAGON_LOGO" width="300"/>
+</p>
 
-## Getting Started
+<p align="center">
+   <a href="https://linkedin.com/in/denis-ladeira-814365115/">
+      <img alt="Denis Mendonça Ladeira" src="https://img.shields.io/badge/-DenisLadeira-gray?style=flat&logo=Linkedin&logoColor=white" />
+   </a>
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/denismend/si-dragons?color=orange">
 
-First, run the development server:
+  <a href="https://github.com/denismend/si-dragons/commits/dev_v1">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/denismend/si-dragons?color=orange">
+  </a>
 
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-gray">
+
+   <a href="https://app.netlify.com/sites/pinkfloyd-discography-denismend/settings/deploys">
+      <img alt="Netfly" src="https://img.shields.io/badge/netfly-Success-gray?style=flat&logo=netlify&logoColor=white" />
+   </a>
+</p>
+
+<p align="center">
+  🐉 SI Dragons 🐉 <br />
+</p>
+
+<p align="center">
+  <img src=".github/sample.gif">
+</p>
+
+<div align="center">
+  <sub>SI Dragons project. Built with ❤︎ by
+    <a href="https://github.com/denismend">Denis Ladeira</a>
+  </sub>
+</div>
+
+
+# :pushpin: Table of Contents
+
+* [Technologies](#computer-technologies)
+* [Features](#rocket-features)
+* [How to Run](#construction_worker-how-to-run)
+* [Found a bug? Missing a specific feature?](#bug-issues)
+* [Contributing](#tada-contributing)
+* [License](#closed_book-license)
+
+# :computer: Technologies
+This project was made using the follow technologies:
+
+* [Typescript](https://www.typescriptlang.org/)
+* [React](https://reactjs.org/)
+* [NextJs](https://nextjs.org/)
+* [context-api](https://reactjs.org/)
+* [styled-components](https://styled-components.com/)
+* [axios](https://github.com/axios/axios)
+* [jest](https://github.com/facebook/jest)
+* [testing-library](https://github.com/testing-library/react-testing-library)
+
+# :rocket: Features
+
+* List of all dragons
+* See dragon details
+* Edit Dragon
+* New Dragon add
+* Delete dragon
+* User authentication with Login page (admin, admin)
+
+
+# :construction_worker: How to run
 ```bash
-npm run dev
-# or
-yarn dev
+# Clone the project on your computer via Download (option Code -> Download ZIP)
+    - If you want to do it with Git, make sure you have Git installed,
+      follow the link https://git-scm.com/
+    - then run the command in terminal:
+        $ git clone https://github.com/denismend/si-dragons.git
+
+# In the terminal or prompt(cmd), access the project root;
+   $ cd si-dragons
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+obs. Make sure you have [Node 17 (stable)](https://nodejs.org/en/) and [npm](https://nodejs.org/en/) 
+installed in your computer. You can use [yarn](https://yarnpkg.com) instead npm. We recommend to use stable version.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+# :computer: Run Project
+```bash
+# Install Dependencies
+$ npm install
+or
+$ yarn
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+# Run Aplication
+$ npm start
+or
+$ yarn start
+```
+Go to http://localhost:3000/ to see the result.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+# :test_tube: Run Tests
+```bash
+# Install dependencies if you didn't
+# Run tests
+$ npm run test
+or
+$ yarn test
 
-## Learn More
+# Run test coverage
+$ npm run test:coverage
+or
+$ yarn test:coverage
+```
 
-To learn more about Next.js, take a look at the following resources:
+# :bug: Issues
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Feel free to **file a new issue** with a respective title and description on the the [DM Store](https://github.com/denismend/si-dragons/issues) repository. If you already found a solution to your problem, **i would love to review your pull request**!
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+# :tada: Contributing
 
-## Deploy on Vercel
+There are many forms to contribute with the project, first of all you can give this github repo a Star.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+If you want do help with the code follow the steps bellow
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```ps
+# Fork using GitHub official command line
+# If you don't have the GitHub CLI, use the web site to do that.
+$ gh repo fork denismend/si-dragons
+
+# Clone your fork
+$ git clone {your-fork-url}
+$ cd si-dragons
+
+# Create a branch with your feature
+$ git checkout -b {branch-name}
+
+# Make the commit with your changes
+$ git commit -m 'Feat: {feature-name}'
+
+# Send the code to your remote branch
+$ git push origin {branch-name}
+```
+
+# :closed_book: License
+
+Released in 2021 :closed_book: License
+
+Made with love by [Denis Ladeira](https://github.com/denismend) 🚀.
+This project is under the [MIT license](./LICENSE).
