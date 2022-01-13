@@ -7,7 +7,9 @@ import { withSSRAuth } from "@/utils/withSSRAuth";
 import Button from "@/components/elements/Button";
 import { Loading } from "@/components/widgets/LoadingState";
 
-import { Container } from "./styles";
+import { ParsedUrlQuery } from "querystring";
+
+import Container from "./styles";
 
 interface DragonPageProps {
   dragon: Dragon;
@@ -34,10 +36,10 @@ export default function DragonPage({ dragon }: DragonPageProps) {
   );
 }
 
-export const getServerSideProps = withSSRAuth(async (ctx) => {
-  const { slug } = ctx.params;
+export const getServerSideProps = withSSRAuth(async ({ params }) => {
+  const { slug } = params as ParsedUrlQuery;
 
-  const dragon = await getDragon(slug);
+  const dragon = await getDragon(String(slug));
 
   if (dragon) {
     return {

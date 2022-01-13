@@ -15,7 +15,7 @@ import { api } from "@/services/apiClient";
 import { queryClient } from "@/services/queryClient";
 import { Dragon, getDragons, useDragons } from "@/services/hooks/useDragons";
 
-import { Container, DragonList, ErrorMessage } from "./styles";
+import Container, { DragonList, ErrorMessage } from "./styles";
 import { ToastContext } from "@/contexts/ToastContext";
 
 interface DashboardProps {

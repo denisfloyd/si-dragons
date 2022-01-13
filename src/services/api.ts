@@ -1,16 +1,10 @@
-import axios, { AxiosError } from "axios";
-import { parseCookies } from "nookies";
+import axios from "axios";
 import { signOut } from "../contexts/AuthContext";
 import { AuthTokenError } from "./errors/AuthTokenError";
 
 export function setupAPIClient(ctx = undefined) {
-  let cookies = parseCookies(ctx);
-
   const api = axios.create({
     baseURL: "http://5c4b2a47aa8ee500142b4887.mockapi.io/api/v1/dragon",
-    headers: {
-      Authorization: `Bearer ${cookies["@sidragons.token"]}`,
-    },
   });
 
   api.interceptors.response.use(

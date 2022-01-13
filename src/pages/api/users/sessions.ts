@@ -17,6 +17,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         expiresIn: "24h",
       }),
     });
+
+    return;
   }
 
   res.status(401).json({ message: "Credenciais inválidas!!" });

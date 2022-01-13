@@ -17,10 +17,10 @@ export const mediaQuery = (
   }
 }
 
-export const setDimensions = (width: string, height = w) => css`
+export const setDimensions = (width: string, height = width) => css`
   width: ${width};
   height: ${height};
-`
+`;
 
 export const fontSize = (size: number, base = 16) => css`
   font-size: ${size}px; // older browsers fallback

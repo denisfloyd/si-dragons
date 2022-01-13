@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { SIZE } from "@/styles/abstracts/_variables";
 
-export const Container = styled.main`
+const Container = styled.main`
   padding: ${SIZE._32};
   height: 100vh;
   position: relative;
@@ -19,6 +19,8 @@ export const Container = styled.main`
     }
   }
 `;
+
+export default Container;
 
 export const DragonList = styled.ul`
   display: grid;

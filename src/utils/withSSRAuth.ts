@@ -23,19 +23,6 @@ export function withSSRAuth<P>(fn: GetServerSideProps<P>) {
       };
     }
 
-    try {
-      return await fn(ctx);
-    } catch (err) {
-      if (err instanceof AuthTokenError) {
-        destroyCookie(ctx, "@sidragons.token");
-
-        return {
-          redirect: {
-            destination: "/",
-            permanent: false,
-          },
-        };
-      }
-    }
+    return await fn(ctx);
   };
 }

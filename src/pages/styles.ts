@@ -5,11 +5,13 @@ import ButtonComponent from "@/components/elements/Button";
 
 import { SIZE, FONT_WEIGHT } from "@/styles/abstracts/_variables";
 
-export const Container = styled.main`
+const Container = styled.main`
   display: flex;
   width: 100vw;
   height: 100vh;
 `;
+
+export default Container;
 
 export const Banner = styled.section`
   background-image: url("./banner.png");

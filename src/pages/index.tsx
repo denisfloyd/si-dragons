@@ -12,7 +12,7 @@ import { withSSRGuest } from "@/utils/withSSRGuest";
 import { Input } from "@/components/elements/Input";
 import getValidationsErrors from "@/utils/getValidationErrors";
 
-import { Container, Content, Banner, ButtonLogin } from "./styles";
+import Container, { Content, Banner, ButtonLogin } from "./styles";
 
 interface LoginFormData {
   username: string;

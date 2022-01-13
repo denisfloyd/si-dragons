@@ -4,7 +4,7 @@ import { flexbox } from "@/styles/abstracts/_mixins";
 import { SIZE } from "@/styles/abstracts/_variables";
 import { convertPixelToREM } from "@/styles/abstracts/_functions";
 
-export const Container = styled.div`
+const Container = styled.div`
   padding: ${SIZE._24};
   color: var(--blue-100);
 
@@ -28,3 +28,5 @@ export const Container = styled.div`
     margin-bottom: ${SIZE._16};
   }
 `;
+
+export default Container;
