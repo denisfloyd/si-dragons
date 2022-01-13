@@ -21,6 +21,8 @@ export const Container = styled.li`
 
       margin-top: ${SIZE._16};
     }
+
+    cursor: pointer;
   }
 
   section.footer {

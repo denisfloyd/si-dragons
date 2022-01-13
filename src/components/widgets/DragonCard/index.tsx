@@ -9,6 +9,7 @@ interface DragonCardProps {
 }
 
 import { Container } from "./styles";
+import Link from "next/link";
 
 export const DragonCard: React.FC<DragonCardProps> = ({
   dragon,
@@ -21,10 +22,12 @@ export const DragonCard: React.FC<DragonCardProps> = ({
 
   return (
     <Container>
-      <section className="body">
-        <h2>{dragon.name}</h2>
-        <p>{dragon.type}</p>
-      </section>
+      <Link href={`/dragon/${dragon.id}`} passHref={true}>
+        <section className="body">
+          <h2>{dragon.name}</h2>
+          <p>{dragon.type}</p>
+        </section>
+      </Link>
       <section className="footer">
         <div className="icon-container">
           <button

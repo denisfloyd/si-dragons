@@ -1,25 +1,36 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useMutation } from "react-query";
+
 import { withSSRAuth } from "@/utils/withSSRAuth";
 
-import { Dragon, getDragons, useDragons } from "@/services/hooks/useDragons";
 import { DragonCard } from "@/components/widgets/DragonCard";
 import { Header } from "@/components/widgets/Header";
-
-import { Container, DragonList } from "./styles";
-import { api } from "@/services/apiClient";
-import { useMutation } from "react-query";
-import { queryClient } from "@/services/queryClient";
 import ModalEditDragon from "@/components/widgets/ModalEditDragon";
 import ModalAddDragon from "@/components/widgets/ModalAddDragon";
 import Button from "@/components/elements/Button";
+import { Loading } from "@/components/widgets/LoadingState";
 
-export default function Dashboard() {
+import { api } from "@/services/apiClient";
+import { queryClient } from "@/services/queryClient";
+import { Dragon, getDragons, useDragons } from "@/services/hooks/useDragons";
+
+import { Container, DragonList, ErrorMessage } from "./styles";
+import { ToastContext } from "@/contexts/ToastContext";
+
+interface DashboardProps {
+  dragons: Dragon[];
+}
+
+export default function Dashboard({ dragons }: DashboardProps) {
   const [editingDragon, setEditingDragon] = useState<Dragon>({} as Dragon);
 
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [editModalOpen, setEditModalOpen] = useState<boolean>(false);
 
-  const { data, isLoading, isFetching, error } = useDragons();
+  const { addToast } = useContext(ToastContext);
+
+  const { data, isLoading, isFetching, error } = useDragons(dragons);
 
   const handleUpdateDragon = async (dragon: Dragon) => {
     const dragonUpdated = {
@@ -30,21 +41,24 @@ export default function Dashboard() {
     await editDragon.mutateAsync(dragonUpdated);
   };
 
-  const editDragon = useMutation(
-    async (dragon: Dragon) => {
+  const editDragon = useMutation(async (dragon: Dragon) => {
+    try {
       const response = await api.put(`/${editingDragon.id}`, {
         ...editingDragon,
         ...dragon,
       });
 
+      queryClient.invalidateQueries("dragons");
+
       return response.data;
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries("dragons");
-      },
+    } catch (error) {
+      addToast({
+        type: "error",
+        title: "Erro",
+        description: "Ocorreu um erro ao editar o dragão!",
+      });
     }
-  );
+  });
 
   const handleAddDragon = async (dragon: Dragon) => {
     const newDragon = {
@@ -55,37 +69,35 @@ export default function Dashboard() {
     await createDragon.mutateAsync(newDragon);
   };
 
-  const createDragon = useMutation(
-    async (dragon: Dragon) => {
+  const createDragon = useMutation(async (dragon: Dragon) => {
+    try {
       const response = await api.post(`/`, {
         ...dragon,
       });
 
+      queryClient.invalidateQueries("dragons");
+
       return response.data;
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries("dragons");
-      },
+    } catch (error) {
+      addToast({
+        type: "error",
+        title: "Erro",
+        description: "Ocorreu um erro ao criar um novo dragão!",
+      });
     }
-  );
+  });
 
   const handleDeleteDragon = async (id: string) => {
     await deleteDragon.mutateAsync(id);
   };
 
-  const deleteDragon = useMutation(
-    async (id: string) => {
-      const response = await api.delete(`/${id}`);
+  const deleteDragon = useMutation(async (id: string) => {
+    const response = await api.delete(`/${id}`);
 
-      return response.data;
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries("dragons");
-      },
-    }
-  );
+    queryClient.invalidateQueries("dragons");
+
+    return response.data;
+  });
 
   const toggleModal = () => {
     setModalOpen(!modalOpen);
@@ -101,36 +113,43 @@ export default function Dashboard() {
   };
 
   return (
-    <Container>
-      <Header />
-      {data && (
-        <DragonList>
-          {data.map((dragon) => (
-            <DragonCard
-              key={dragon.id}
-              dragon={dragon}
-              handleDelete={handleDeleteDragon}
-              handleEditDragon={handleEditDragon}
-            />
-          ))}
-        </DragonList>
-      )}
+    <>
+      {isLoading || (isFetching && <Loading />)}
 
-      <ModalAddDragon
-        isOpen={modalOpen}
-        setIsOpen={toggleModal}
-        handleAddDragon={handleAddDragon}
-      />
+      <Container>
+        <Header />
 
-      <ModalEditDragon
-        isOpen={editModalOpen}
-        setIsOpen={toggleEditModal}
-        editingDragon={editingDragon}
-        handleUpdateDragon={handleUpdateDragon}
-      />
+        {error || !data ? (
+          <ErrorMessage>Falha ao obter dados dos usuários {error}</ErrorMessage>
+        ) : (
+          <DragonList>
+            {data.map((dragon) => (
+              <DragonCard
+                key={dragon.id}
+                dragon={dragon}
+                handleDelete={handleDeleteDragon}
+                handleEditDragon={handleEditDragon}
+              />
+            ))}
+          </DragonList>
+        )}
 
-      <Button onClick={toggleModal}>Adicionar Drãgão</Button>
-    </Container>
+        <ModalAddDragon
+          isOpen={modalOpen}
+          setIsOpen={toggleModal}
+          handleAddDragon={handleAddDragon}
+        />
+
+        <ModalEditDragon
+          isOpen={editModalOpen}
+          setIsOpen={toggleEditModal}
+          editingDragon={editingDragon}
+          handleUpdateDragon={handleUpdateDragon}
+        />
+
+        <Button onClick={toggleModal}>Adicionar Dragão</Button>
+      </Container>
+    </>
   );
 }
 

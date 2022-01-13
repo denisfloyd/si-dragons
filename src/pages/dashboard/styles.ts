@@ -8,10 +8,15 @@ export const Container = styled.main`
   overflow: overlay;
 
   & > button {
-    position: absolute;
-    top: 20px;
+    position: fixed;
+    top: 2rem;
     width: auto;
     right: 2rem;
+
+    background-color: var(--orange-100);
+    &:hover {
+      background: var(--orange-200);
+    }
   }
 `;
 
@@ -21,4 +26,9 @@ export const DragonList = styled.ul`
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 
   list-style: none;
+`;
+
+export const ErrorMessage = styled.h1`
+  color: var(--red-500);
+  text-align: center;
 `;

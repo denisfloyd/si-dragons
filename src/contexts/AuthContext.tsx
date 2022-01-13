@@ -31,12 +31,8 @@ type AuthProviderProps = {
 
 export const AuthContext = createContext({} as AuthContextData);
 
-// let authChannel: BroadcastChannel;
-
 export function signOut() {
   destroyCookie(undefined, "@sidragons.token");
-
-  // authChannel.postMessage("signOut");
 
   Router.push("/");
 }
@@ -46,19 +42,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const isAuthenticated = !!user;
 
   const { addToast } = useContext(ToastContext);
-
-  useEffect(() => {
-    // authChannel = new BroadcastChannel("auth");
-    // authChannel.onmessage = (message) => {
-    //   switch (message.data) {
-    //     case "signOut":
-    //       signOut();
-    //       break;
-    //     default:
-    //       break;
-    //   }
-    // };
-  }, []);
 
   useEffect(() => {
     const { "@sidragons.token": token } = parseCookies();
