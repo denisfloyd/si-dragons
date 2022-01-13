@@ -83,10 +83,17 @@ $ npm install
 or
 $ yarn
 
-# Run Aplication
+# Run Aplication (Dev mode)
+$ npm run dev
+or
+$ yarn dev
+
+# Run Aplication (Build mode)
+$ npm run build
 $ npm start
 or
-$ yarn start
+$ yarn build
+$ yarn dev
 ```
 Go to http://localhost:3000/ to see the result.
 
@@ -103,7 +110,6 @@ $ npm run test:coverage
 or
 $ yarn test:coverage
 ```
-
 # :bug: Issues
 
 Feel free to **file a new issue** with a respective title and description on the the [DM Store](https://github.com/denismend/si-dragons/issues) repository. If you already found a solution to your problem, **i would love to review your pull request**!
