@@ -59,7 +59,7 @@ const ModalAddDragon: React.FC<ModalAddFoodProps> = ({
         <Input name="name" placeholder="Nome do dragão" />
         <Input name="type" placeholder="Tipo do dragão" />
 
-        <Button type="submit" data-testid="edit-food-button">
+        <Button type="submit" data-testid="add-dragon-button-modal">
           Adicionar
         </Button>
       </Form>

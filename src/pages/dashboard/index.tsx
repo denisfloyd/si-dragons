@@ -61,12 +61,7 @@ export default function Dashboard({ dragons }: DashboardProps) {
   });
 
   const handleAddDragon = async (dragon: Dragon) => {
-    const newDragon = {
-      ...editingDragon,
-      ...dragon,
-    };
-
-    await createDragon.mutateAsync(newDragon);
+    await createDragon.mutateAsync(dragon);
   };
 
   const createDragon = useMutation(async (dragon: Dragon) => {
@@ -147,7 +142,9 @@ export default function Dashboard({ dragons }: DashboardProps) {
           handleUpdateDragon={handleUpdateDragon}
         />
 
-        <Button onClick={toggleModal}>Adicionar Dragão</Button>
+        <Button onClick={toggleModal} data-testid="button-add-dragon">
+          Adicionar Dragão
+        </Button>
       </Container>
     </>
   );

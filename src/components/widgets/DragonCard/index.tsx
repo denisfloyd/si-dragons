@@ -21,7 +21,7 @@ export const DragonCard: React.FC<DragonCardProps> = ({
   };
 
   return (
-    <Container>
+    <Container data-testid="dragon-card">
       <Link href={`/dragon/${dragon.id}`} passHref={true}>
         <section className="body">
           <h2>{dragon.name}</h2>

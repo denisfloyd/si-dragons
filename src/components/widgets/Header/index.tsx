@@ -12,7 +12,9 @@ export const Header: React.FC = () => {
     <Container>
       <div>
         <h1>Usuário: {user}</h1>
-        <Button onClick={signOut}>Sign out</Button>
+        <Button onClick={signOut} data-testid="button-logout">
+          Sign out
+        </Button>
       </div>
     </Container>
   );

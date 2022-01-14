@@ -33,12 +33,12 @@ const ModalEditFood: React.FC<ModalEditFoodProps> = ({
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
       <Form ref={formRef} onSubmit={handleSubmit} initialData={editingDragon}>
-        <h1>Editar Dragon</h1>
+        <h1>Editar Dragão</h1>
 
         <Input name="name" placeholder="Nome do dragão" />
         <Input name="type" placeholder="Tipo do dragão" />
 
-        <Button type="submit" data-testid="edit-food-button">
+        <Button type="submit" data-testid="edit-dragon-button-modal">
           Editar
         </Button>
       </Form>

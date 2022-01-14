@@ -3,9 +3,7 @@ import {
   GetServerSidePropsContext,
   GetServerSidePropsResult,
 } from "next";
-import { destroyCookie, parseCookies } from "nookies";
-
-import { AuthTokenError } from "../services/errors/AuthTokenError";
+import { parseCookies } from "nookies";
 
 export function withSSRAuth<P>(fn: GetServerSideProps<P>) {
   return async (

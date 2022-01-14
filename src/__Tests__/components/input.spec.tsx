@@ -17,7 +17,7 @@ jest.mock("@unform/core", () => {
 });
 
 describe("Input Component", () => {
-  it("should be to handler an input", () => {
+  it("it should be to handler an input", () => {
     const { getByPlaceholderText } = render(
       <Input name="username" placeholder="Usuário" />
     );
@@ -25,7 +25,7 @@ describe("Input Component", () => {
     expect(getByPlaceholderText("Usuário")).toBeTruthy();
   });
 
-  it("should render show errors", async () => {
+  it("it should show errors", async () => {
     const { getByText } = render(
       <Input name="username" placeholder="Usuário" />
     );
