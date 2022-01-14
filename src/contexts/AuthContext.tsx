@@ -58,7 +58,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   async function signIn({ username, password }: SignInCredentials) {
     try {
       const apiFromApiRoutes = axios.create({
-        baseURL: "http://localhost:3000/api",
+        baseURL: `${process.env.NEXT_PUBLIC_API_ROUTES_URL}`,
       });
 
       const response = await apiFromApiRoutes.post("users/sessions", {
