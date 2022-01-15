@@ -106,9 +106,9 @@ or
 $ yarn test
 
 # Run test coverage
-$ npm run test:coverage
+$ npm run test --coverage
 or
-$ yarn test:coverage
+$ yarn test --coverage
 ```
 # :bug: Issues
 

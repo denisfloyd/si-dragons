@@ -5,13 +5,17 @@ import {
   useEffect,
   useState,
 } from "react";
+
 import Router from "next/router";
+
 import { setCookie, parseCookies, destroyCookie } from "nookies";
 import decode from "jwt-decode";
 
-import { api } from "../services/apiClient";
+import { api, apiLogin } from "../services/apiClient";
+
 import axios from "axios";
-import { ToastContext } from "./ToastContext";
+
+import { useToast } from "./ToastContext";
 
 type SignInCredentials = {
   username: string;
@@ -41,7 +45,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<string>("");
   const isAuthenticated = !!user;
 
-  const { addToast } = useContext(ToastContext);
+  const { addToast } = useToast();
 
   useEffect(() => {
     const { "@sidragons.token": token } = parseCookies();
@@ -57,11 +61,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   async function signIn({ username, password }: SignInCredentials) {
     try {
-      const apiFromApiRoutes = axios.create({
-        baseURL: `${process.env.NEXT_PUBLIC_API_ROUTES_URL}`,
-      });
-
-      const response = await apiFromApiRoutes.post("users/sessions", {
+      const response = await apiLogin.post("users/sessions", {
         username,
         password,
       });
@@ -95,4 +95,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
       {children}
     </AuthContext.Provider>
   );
+}
+
+export function useAuth(): AuthContextData {
+  const context = useContext(AuthContext);
+
+  return context;
 }

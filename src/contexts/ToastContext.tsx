@@ -1,4 +1,10 @@
-import React, { createContext, ReactNode, useCallback, useState } from "react";
+import React, {
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
+  useState,
+} from "react";
 
 import { uuid } from "uuidv4";
 
@@ -53,4 +59,10 @@ export function ToastProvider({ children }: ToastProviderProps) {
       <ToastContainer messages={messages} />
     </ToastContext.Provider>
   );
+}
+
+export function useToast(): ToastContextData {
+  const context = useContext(ToastContext);
+
+  return context;
 }

@@ -1,10 +1,12 @@
 import React, { useRef } from "react";
-import { FiCheckSquare } from "react-icons/fi";
+import * as Yup from "yup";
 
 import { Form } from "./styles";
 import { FormHandles } from "@unform/core";
 
 import { Dragon } from "@/services/hooks/useDragons";
+
+import getValidationsErrors from "@/utils/getValidationErrors";
 
 import Modal from "@/components/elements/Modal";
 import Button from "@/components/elements/Button";
@@ -26,8 +28,31 @@ const ModalEditFood: React.FC<ModalEditFoodProps> = ({
   const formRef = useRef<FormHandles>(null);
 
   const handleSubmit = async (data: Dragon) => {
-    handleUpdateDragon(data);
-    setIsOpen();
+    try {
+      formRef.current?.setErrors({});
+
+      const schema = Yup.object().shape({
+        name: Yup.string().required("Nome obrigatório"),
+        type: Yup.string().required("Tipo obrigatória"),
+      });
+
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+
+      handleUpdateDragon(data);
+      setIsOpen();
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        const errors = getValidationsErrors(err);
+
+        formRef.current?.setErrors(errors);
+
+        return;
+      }
+    }
+
+   
   };
 
   return (
