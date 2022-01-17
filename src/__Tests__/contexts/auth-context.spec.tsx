@@ -12,7 +12,7 @@ import { useToast } from "@/contexts/ToastContext";
 import { apiLogin } from "@/services/apiClient";
 
 import Router from "next/router";
-import { waitFor } from "@testing-library/dom";
+import { waitFor } from "@testing-library/react";
 
 const apiMock = new AxiosMock(apiLogin);
 

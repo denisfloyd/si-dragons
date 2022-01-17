@@ -31,7 +31,7 @@ jest.mock("nookies", () => {
   };
 });
 
-describe("Dashboard component", () => {
+describe("Dashboard page component", () => {
   beforeAll(() => {
     apiMock.onGet("?sortBy=name").reply(200, [...dragons]);
     apiMock.onPost().reply(200);

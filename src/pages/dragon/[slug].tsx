@@ -5,7 +5,6 @@ import { Dragon, getDragon } from "@/services/hooks/useDragons";
 import { withSSRAuth } from "@/utils/withSSRAuth";
 
 import Button from "@/components/elements/Button";
-import { Loading } from "@/components/widgets/LoadingState";
 
 import { ParsedUrlQuery } from "querystring";
 
@@ -24,7 +23,7 @@ export default function DragonPage({ dragon }: DragonPageProps) {
 
   return (
     <Container>
-      <Button onClick={handleClickBack}>
+      <Button onClick={handleClickBack} data-testid="button-back">
         <IoMdBackspace />
         Voltar
       </Button>
