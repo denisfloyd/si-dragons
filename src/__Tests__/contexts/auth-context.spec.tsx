@@ -96,7 +96,7 @@ describe("AuthContext Context", () => {
     let renderHookResult: any;
 
     try {
-      const { result, waitForNextUpdate } = renderHook(useAuth, {
+      const { result } = renderHook(useAuth, {
         wrapper: AuthProvider,
       });
 
@@ -104,13 +104,6 @@ describe("AuthContext Context", () => {
 
       act(() => {
         result.current.signIn({ username: "wrong", password: "wrong" });
-      });
-
-      expect(result.current.user).toBe("");
-      expect(result.current.isAuthenticated).toBe(false);
-      expect(addToastMocked).toHaveBeenCalledWith({
-        type: "error",
-        title: "Erro na autenticação",
       });
     } catch (e) {
       await waitFor(() => {
