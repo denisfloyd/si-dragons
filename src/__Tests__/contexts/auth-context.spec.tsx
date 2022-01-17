@@ -4,12 +4,15 @@ import { mocked } from "jest-mock";
 
 import AxiosMock from "axios-mock-adapter";
 
-import { AuthProvider, AuthContext, useAuth } from "@/contexts/AuthContext";
-
 import { destroyCookie, parseCookies } from "nookies";
+
+import { AuthProvider, AuthContext, useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/contexts/ToastContext";
+
 import { apiLogin } from "@/services/apiClient";
 
 import Router from "next/router";
+import { waitFor } from "@testing-library/dom";
 
 const apiMock = new AxiosMock(apiLogin);
 
@@ -30,18 +33,17 @@ jest.mock("nookies", () => {
   };
 });
 
-const mocketUseToast = jest.fn();
-jest.mock("@/contexts/ToastContext", () => {
-  return {
-    useToast: () => ({
-      addToast: mocketUseToast,
-    }),
-  };
-});
+const addToastMocked = jest.fn();
+const mocketUseToast = useToast as jest.Mock;
+jest.mock("../../contexts/ToastContext");
 
 describe("AuthContext Context", () => {
   beforeEach(() => {
     apiMock.reset();
+
+    mocketUseToast.mockReturnValue({
+      addToast: addToastMocked,
+    });
   });
 
   it("it should to load a session user", async () => {
@@ -91,16 +93,38 @@ describe("AuthContext Context", () => {
       .onPost("/users/sessions")
       .reply(401, { data: { message: "Invalid credentials" } });
 
-    const { result } = renderHook(useAuth, {
-      wrapper: AuthProvider,
-    });
+    let renderHookResult: any;
 
-    act(() => {
-      result.current.signIn({ username: "wrong", password: "wrong" });
-    });
+    try {
+      const { result, waitForNextUpdate } = renderHook(useAuth, {
+        wrapper: AuthProvider,
+      });
 
-    expect(result.current.isAuthenticated).toBe(false);
-    expect(result.current.user).toBe("");
+      renderHookResult = result.current;
+
+      act(() => {
+        result.current.signIn({ username: "wrong", password: "wrong" });
+      });
+
+      expect(result.current.user).toBe("");
+      expect(result.current.isAuthenticated).toBe(false);
+      expect(addToastMocked).toHaveBeenCalledWith({
+        type: "error",
+        title: "Erro na autenticação",
+      });
+    } catch (e) {
+      await waitFor(() => {
+        expect(addToastMocked).toHaveBeenCalled();
+        expect(renderHookResult.user).toBe("");
+        expect(renderHookResult.isAuthenticated).toBe(false);
+        expect(addToastMocked).toHaveBeenCalledWith({
+          type: "error",
+          title: "Erro na autenticação",
+          description:
+            "Ocorreu um erro ao tentar realizar a autenticação. Verifique o usuário e/ou senha!",
+        });
+      });
+    }
   });
 
   it("it should be able to logout", async () => {

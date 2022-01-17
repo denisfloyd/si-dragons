@@ -4,7 +4,7 @@ import { AuthTokenError } from "./errors/AuthTokenError";
 
 export function setupAPIClient(ctx = undefined) {
   const api = axios.create({
-    baseURL: "http://5c4b2a47aa8ee500142b4887.mockapi.io/api/v1/dragon",
+    baseURL: "https://5c4b2a47aa8ee500142b4887.mockapi.io/api/v1/dragon",
   });
 
   api.interceptors.response.use(
