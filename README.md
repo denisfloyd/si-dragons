@@ -1,4 +1,4 @@
-``<p align="center">
+<p align="center">
    <img src="./.github/logo.png" alt="SI_DRAGON_LOGO" width="300"/>
 </p>
 
@@ -17,6 +17,10 @@
 
 <p align="center">
   🐉 SI Dragons 🐉 <br />
+</p>
+
+<p align="center">
+   User and Password to access: admin / admin <br />
 </p>
 
 <p align="center">
@@ -71,6 +75,9 @@ This project was made using the follow technologies:
 
 # In the terminal or prompt(cmd), access the project root;
    $ cd si-dragons
+   
+# Create .env.local
+   - In project root create a .env.local file follow .env.sample with same vars.
 ```
 
 obs. Make sure you have [Node 17 (stable)](https://nodejs.org/en/) and [npm](https://nodejs.org/en/) 
@@ -79,19 +86,12 @@ installed in your computer. You can use [yarn](https://yarnpkg.com) instead npm.
 # :computer: Run Project
 ```bash
 # Install Dependencies
-$ npm install
-or
 $ yarn
 
 # Run Aplication (Dev mode)
-$ npm run dev
-or
 $ yarn dev
 
 # Run Aplication (Build mode)
-$ npm run build
-$ npm start
-or
 $ yarn build
 $ yarn dev
 ```
@@ -101,13 +101,9 @@ Go to http://localhost:3000/ to see the result.
 ```bash
 # Install dependencies if you didn't
 # Run tests
-$ npm run test
-or
 $ yarn test
 
 # Run test coverage
-$ npm run test --coverage
-or
 $ yarn test --coverage
 ```
 # :bug: Issues
