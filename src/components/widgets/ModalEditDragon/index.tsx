@@ -32,8 +32,12 @@ const ModalEditFood: React.FC<ModalEditFoodProps> = ({
       formRef.current?.setErrors({});
 
       const schema = Yup.object().shape({
-        name: Yup.string().required("Nome obrigatório"),
-        type: Yup.string().required("Tipo obrigatória"),
+        name: Yup.string()
+          .required("Nome obrigatório")
+          .min(5, "O nome deve ter no mínimo 5 caracteres"),
+        type: Yup.string()
+          .required("Tipo obrigatório")
+          .min(2, "O tipo deve ter no mínimo 2 caracteres"),
       });
 
       await schema.validate(data, {

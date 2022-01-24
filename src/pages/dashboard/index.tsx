@@ -28,11 +28,15 @@ export default function Dashboard({ dragons }: DashboardProps) {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [editModalOpen, setEditModalOpen] = useState<boolean>(false);
 
+  const [isFetchingData, setIsFetchingData] = useState<boolean>(false);
+
   const { addToast } = useContext(ToastContext);
 
   const { data, isLoading, isFetching, error } = useDragons(dragons);
 
   const handleUpdateDragon = async (dragon: Dragon) => {
+    setIsFetchingData(true);
+
     const dragonUpdated = {
       ...editingDragon,
       ...dragon,
@@ -57,10 +61,13 @@ export default function Dashboard({ dragons }: DashboardProps) {
         title: "Erro",
         description: "Ocorreu um erro ao editar o dragão!",
       });
+    } finally {
+      setIsFetchingData(false);
     }
   });
 
   const handleAddDragon = async (dragon: Dragon) => {
+    setIsFetchingData(true);
     await createDragon.mutateAsync(dragon);
   };
 
@@ -79,16 +86,19 @@ export default function Dashboard({ dragons }: DashboardProps) {
         title: "Erro",
         description: "Ocorreu um erro ao criar um novo dragão!",
       });
+    } finally {
+      setIsFetchingData(false);
     }
   });
 
   const handleDeleteDragon = async (id: string) => {
+    setIsFetchingData(true);
     await deleteDragon.mutateAsync(id);
   };
 
   const deleteDragon = useMutation(async (id: string) => {
     const response = await api.delete(`/${id}`);
-
+    setIsFetchingData(false);
     queryClient.invalidateQueries("dragons");
 
     return response.data;
@@ -109,7 +119,7 @@ export default function Dashboard({ dragons }: DashboardProps) {
 
   return (
     <>
-      {isLoading || (isFetching && <Loading />)}
+      {(isLoading || isFetchingData || isFetching) && <Loading />}
 
       <Container>
         <Header />
